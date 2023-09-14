@@ -181,7 +181,7 @@ let cliche_db = [
         "text": "all talk, no action",
         "textArr": [
             "all",
-            "talk,",
+            "talk",
             "no",
             "action"
         ]
@@ -254,7 +254,7 @@ let cliche_db = [
         "text": "another day, another dollar",
         "textArr": [
             "another",
-            "day,",
+            "day",
             "another",
             "dollar"
         ]
@@ -483,7 +483,7 @@ let cliche_db = [
         "text": "been there, done that",
         "textArr": [
             "been",
-            "there,",
+            "there",
             "done",
             "that"
         ]
@@ -1383,7 +1383,7 @@ let cliche_db = [
         "text": "day in, day out",
         "textArr": [
             "day",
-            "in,",
+            "in",
             "day",
             "out"
         ]
@@ -2085,7 +2085,7 @@ let cliche_db = [
         "text": "garbage in, garbage out",
         "textArr": [
             "garbage",
-            "in,",
+            "in",
             "garbage",
             "out"
         ]
@@ -2849,8 +2849,8 @@ let cliche_db = [
         "textArr": [
             "just",
             "a",
-            "hop,",
-            "skip,",
+            "hop",
+            "skip",
             "and",
             "a",
             "jump"
@@ -2896,7 +2896,7 @@ let cliche_db = [
         "textArr": [
             "keep",
             "it",
-            "simple,",
+            "simple",
             "stupid"
         ]
     },
@@ -3087,12 +3087,10 @@ let cliche_db = [
         ]
     },
     {
-        "text": "knuckle under\nCliche List L-Z:",
+        "text": "knuckle under",
         "textArr": [
             "knuckle",
-            "under\nCliche",
-            "List",
-            "L-Z:"
+            "under"
         ]
     },
     {
@@ -3727,7 +3725,7 @@ let cliche_db = [
         "text": "no guts, no glory",
         "textArr": [
             "no",
-            "guts,",
+            "guts",
             "no",
             "glory"
         ]
@@ -3744,7 +3742,7 @@ let cliche_db = [
         "text": "no pain, no gain",
         "textArr": [
             "no",
-            "pain,",
+            "pain",
             "no",
             "gain"
         ]
@@ -4045,7 +4043,7 @@ let cliche_db = [
         "text": "once bitten, twice shy",
         "textArr": [
             "once",
-            "bitten,",
+            "bitten",
             "twice",
             "shy"
         ]
@@ -4164,7 +4162,7 @@ let cliche_db = [
         "textArr": [
             "out",
             "of",
-            "sight,",
+            "sight",
             "out",
             "of",
             "mind"
@@ -4873,8 +4871,8 @@ let cliche_db = [
     {
         "text": "signed, sealed, and delivered",
         "textArr": [
-            "signed,",
-            "sealed,",
+            "signed",
+            "sealed",
             "and",
             "delivered"
         ]
@@ -4892,7 +4890,7 @@ let cliche_db = [
         "textArr": [
             "six",
             "of",
-            "one,",
+            "one",
             "half",
             "a",
             "dozen",
@@ -4979,7 +4977,7 @@ let cliche_db = [
         "textArr": [
             "spare",
             "the",
-            "rod,",
+            "rod",
             "spoil",
             "the",
             "child"
@@ -5824,7 +5822,7 @@ let cliche_db = [
         "textArr": [
             "when",
             "it",
-            "rains,",
+            "rains",
             "it",
             "pours"
         ]
@@ -5855,7 +5853,7 @@ let cliche_db = [
             "the",
             "going",
             "gets",
-            "tough,",
+            "tough",
             "the",
             "tough",
             "get",
@@ -5904,12 +5902,12 @@ let cliche_db = [
         ]
     },
     {
-        "text": "will wonders never cease?",
+        "text": "will wonders never cease",
         "textArr": [
             "will",
             "wonders",
             "never",
-            "cease?"
+            "cease"
         ]
     },
     {
@@ -6010,7 +6008,7 @@ let cliche_db = [
         "textArr": [
             "you",
             "can",
-            "run,",
+            "run",
             "but",
             "you",
             "can't",
@@ -6052,4 +6050,55 @@ let cliche_db = [
     }
 ];
 
-module.exports={cliche_db};
+// init wordbank object
+let wordbank_db = {};
+
+// iterate through cliche_db to populate wordbank
+for (let i=0; i<cliche_db.length; i++) {
+    for (let z=0; z<cliche_db[i].textArr.length; z++) {
+        if (!wordbank_db[cliche_db[i].textArr[z]]) {
+            wordbank_db[cliche_db[i].textArr[z]] = [cliche_db[i]];
+        } else if (wordbank_db[cliche_db[i].textArr[z]]) {
+            wordbank_db[cliche_db[i].textArr[z]].push(cliche_db[i]);
+        }
+    }
+}
+
+let s = Math.floor(Math.random() * 668 + 1);
+
+function popResults () {
+    let restable = document.querySelector('#wb-results');
+    restable.innerHTML="";
+    let reshead = document.createElement('li');
+    reshead.className = "w3-red w3-xlarge w3-padding-32";
+    reshead.id = "query-word"
+    reshead.innerText = this.innerText;
+    restable.append(reshead);
+    for (let g=0; g<wordbank_db[(this.innerText)].length; g++) {
+        let resbox = document.querySelector(`#wb-results`);
+        let res = wordbank_db[(this.innerText)][g].text;
+        let row = document.createElement('li');
+        row.className = "w3-light-grey w3-padding-24";
+        row.innerText = res;
+        resbox.append(row);
+    }
+}
+
+function sampElem (s, m) {
+    let cliche_obj = cliche_db[s+m];
+    let cliche = document.querySelector(`#samp${m}`);
+    for (h=0; h<cliche_obj.textArr.length; h++) {
+        let sword = document.createElement('button');
+        sword.className = "w3-button w3-white w3-padding-large w3-hover-black";
+        sword.id = `s_${m}_w_${h}`;
+        sword.innerText = `${cliche_obj.textArr[h]}`;
+        sword.onclick = popResults;
+        cliche.append(sword);
+        //document.querySelector(`#s_${m}_w_${h}`).onclick = ()=>{console.log(cliche_obj.textArr[h]); return popResults(cliche_obj.textArr[h])};
+    }
+    //document.body.append(cliche);
+}
+
+for (let m=0; m<5; m++) {
+    sampElem(s,m);
+}
