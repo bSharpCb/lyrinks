@@ -6084,8 +6084,8 @@ function popResults () {
     }
 }
 
-function sampElem (s, m) {
-    let cliche_obj = cliche_db[s+m];
+function sampElem (s,m) {
+    let cliche_obj = cliche_db[s];
     let cliche = document.querySelector(`#samp${m}`);
     for (h=0; h<cliche_obj.textArr.length; h++) {
         let sword = document.createElement('button');
@@ -6099,6 +6099,11 @@ function sampElem (s, m) {
     //document.body.append(cliche);
 }
 
-for (let m=0; m<5; m++) {
-    sampElem(s,m);
+var sampArr = [];
+while(sampArr.length < 10){
+    var r = Math.floor(Math.random() * 679) + 1;
+    if(sampArr.indexOf(r) === -1) sampArr.push(r);
+}
+for (let m=0; m<sampArr.length; m++) {
+    sampElem(sampArr[m],m);
 }
