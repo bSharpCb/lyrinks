@@ -1104,11 +1104,11 @@ let cliche_db = [
         ]
     },
     {
-        "text": "caught with his/her pants down",
+        "text": "caught with their pants down",
         "textArr": [
             "caught",
             "with",
-            "his/her",
+            "their",
             "pants",
             "down"
         ]
@@ -1121,11 +1121,11 @@ let cliche_db = [
         ]
     },
     {
-        "text": "chip on his/her shoulder",
+        "text": "chip on their shoulder",
         "textArr": [
             "chip",
             "on",
-            "his/her",
+            "their",
             "shoulder"
         ]
     },
@@ -1544,11 +1544,11 @@ let cliche_db = [
         ]
     },
     {
-        "text": "down on his/her luck",
+        "text": "down on their luck",
         "textArr": [
             "down",
             "on",
-            "his/her",
+            "their",
             "luck"
         ]
     },
@@ -1683,10 +1683,10 @@ let cliche_db = [
         ]
     },
     {
-        "text": "earn his/her keep",
+        "text": "earn their keep",
         "textArr": [
             "earn",
-            "his/her",
+            "their",
             "keep"
         ]
     },
@@ -2119,10 +2119,10 @@ let cliche_db = [
         ]
     },
     {
-        "text": "get his/her back up",
+        "text": "get their back up",
         "textArr": [
             "get",
-            "his/her",
+            "their",
             "back",
             "up"
         ]
@@ -2610,10 +2610,10 @@ let cliche_db = [
         ]
     },
     {
-        "text": "in his/her element",
+        "text": "in their element",
         "textArr": [
             "in",
-            "his/her",
+            "their",
             "element"
         ]
     },
@@ -2626,11 +2626,11 @@ let cliche_db = [
         ]
     },
     {
-        "text": "in over his/her head",
+        "text": "in over their head",
         "textArr": [
             "in",
             "over",
-            "his/her",
+            "their",
             "head"
         ]
     },
@@ -3955,10 +3955,10 @@ let cliche_db = [
         ]
     },
     {
-        "text": "on his/her high horse",
+        "text": "on their high horse",
         "textArr": [
             "on",
-            "his/her",
+            "their",
             "high",
             "horse"
         ]
@@ -4442,13 +4442,13 @@ let cliche_db = [
         ]
     },
     {
-        "text": "pulled the wool over his/her eyes",
+        "text": "pulled the wool over their eyes",
         "textArr": [
             "pulled",
             "the",
             "wool",
             "over",
-            "his/her",
+            "their",
             "eyes"
         ]
     },
@@ -4722,12 +4722,12 @@ let cliche_db = [
         ]
     },
     {
-        "text": "scared out of his/her wits",
+        "text": "scared out of their wits",
         "textArr": [
             "scared",
             "out",
             "of",
-            "his/her",
+            "their",
             "wits"
         ]
     },
@@ -5558,10 +5558,10 @@ let cliche_db = [
         ]
     },
     {
-        "text": "under his/her thumb",
+        "text": "under their thumb",
         "textArr": [
             "under",
-            "his/her",
+            "their",
             "thumb"
         ]
     },
@@ -6087,6 +6087,7 @@ function popResults () {
 function sampElem (s,m) {
     let cliche_obj = cliche_db[s];
     let cliche = document.querySelector(`#samp${m}`);
+    cliche.innerHTML = "";
     for (h=0; h<cliche_obj.textArr.length; h++) {
         let sword = document.createElement('button');
         sword.className = "w3-button w3-white w3-padding-large w3-hover-black";
@@ -6099,11 +6100,31 @@ function sampElem (s,m) {
     //document.body.append(cliche);
 }
 
-var sampArr = [];
-while(sampArr.length < 10){
-    var r = Math.floor(Math.random() * 679) + 1;
-    if(sampArr.indexOf(r) === -1) sampArr.push(r);
+function pickTen() {
+    let restable = document.querySelector('#wb-results');
+    restable.innerHTML="";
+    let reshead = document.createElement('li');
+    reshead.className = "w3-red w3-xlarge w3-padding-32";
+    reshead.id = "query-word"
+    reshead.innerText = 'Click words to see relevant cliches';
+    restable.append(reshead);
+    let sampArr = [];
+    while(sampArr.length < 10){
+        let r = Math.floor(Math.random() * 679) + 1;
+        if(sampArr.indexOf(r) === -1) sampArr.push(r);
+    }
+    for (let m=0; m<sampArr.length; m++) {
+        sampElem(sampArr[m],m);
+    }
 }
-for (let m=0; m<sampArr.length; m++) {
-    sampElem(sampArr[m],m);
-}
+
+pickTen();
+
+// let sampArr = [];
+// while(sampArr.length < 10){
+//     let r = Math.floor(Math.random() * 679) + 1;
+//     if(sampArr.indexOf(r) === -1) sampArr.push(r);
+// }
+// for (let m=0; m<sampArr.length; m++) {
+//     sampElem(sampArr[m],m);
+// }
